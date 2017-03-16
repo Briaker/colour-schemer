@@ -1,21 +1,30 @@
-const gulp          = require('gulp');
-const sass          = require('gulp-sass');
-const concat        = require('gulp-concat');
-const autoprefixer  = require('gulp-autoprefixer');
-const notify        = require('gulp-notify');
-const plumber       = require('gulp-plumber');
-const browserSync   = require('browser-sync').create();
+const gulp              = require('gulp');
+const sass              = require('gulp-sass');
+const concat            = require('gulp-concat');
+const autoprefixer      = require('gulp-autoprefixer');
+const notify            = require('gulp-notify');
+const plumber           = require('gulp-plumber');
+const babelify          = require('babelify');
+const stageTwo          = require('babel-preset-stage-2');
+const browserify        = require('browserify');
+const buffer            = require('vinyl-buffer');
+const source            = require('vinyl-source-stream');
 
-const babelify      = require('babelify');
-const browserify    = require('browserify');
-const buffer        = require('vinyl-buffer');
-const source        = require('vinyl-source-stream');
+const historyFallback   = require('connect-history-api-fallback');
+const browserSync       = require('browser-sync').create();
+const reload            = browserSync.reload;
 
-const reload        = browserSync.reload;
 
 gulp.task('browser-sync', () => {
     browserSync.init({
-        server: './dist'
+        server: {
+            baseDir: './dist',
+            middleware: [
+                historyFallback()
+            ],
+            ghostMode: false,
+            notify: false
+        }
     })
 });
 
@@ -35,16 +44,20 @@ gulp.task('styles', () => {
 });
 
 gulp.task('es6', () => {
-    return browserify('./src/app.js')
+    return browserify('./src/main.js')
     .transform('babelify', {
-        presets: ['es2015', 'react']
+        presets: [
+            'es2015', 
+            'react',
+            'stage-2'
+            ]
     })
     .bundle()
     .on('error',notify.onError({
         message: "Error: <%= error.message %>",
         title: 'Error in JS 💀'
     }))
-    .pipe(source('app.js'))
+    .pipe(source('main.js'))
     .pipe(buffer())
     .pipe(gulp.dest('./dist/assets/js'))
     .pipe(reload({stream: true}));
@@ -52,7 +65,7 @@ gulp.task('es6', () => {
 
 gulp.task('watch', () => {
     gulp.watch('./src/assets/styles/**/*.scss', ['styles']);
-    gulp.watch('./src/app.js', ['es6']);
+    gulp.watch('./src/**/*.js', ['es6']);
     gulp.watch('./src/*.html', ['html']);
 });
 

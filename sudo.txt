@@ -1,0 +1,66 @@
+Prominent colour picker using vibrant.js
+
+Public
+    Header Component
+        Nav bar fixed to the top of the screen
+            Login Button
+
+    Input Component
+        Empty square with dashed border around it and a plus sign in the middle
+        Drag and drop image, or click a button to browser local files (image is only stored temporarily when not logged in)
+        Upload image/Processing progress indicator
+        Move to Dispaly Component(new colour)
+
+    Display Component
+        If image not is available move to Input Display, or Show message with button/link
+
+        Display uploaded image and Colours and colour hex/rgb/hsl below each colour
+
+        Login to Save button
+            move to login Component(pass in a Component to display after login)(image display)
+            if use logs in
+
+User
+    Header Component
+        Nav bar fixed to the top of the screen
+            Logout Button
+            Collections Button
+        
+    Input Component
+        Same as Public, change signin in top nav to user profile
+
+    Display Comopnent
+        Display Save Button if the the image is new and not currently added to collection
+
+    Collections Component
+        Display all collection thumbnails
+
+        CollectionItemThumb
+            Image Thumb, colours along the bottom of the image squished togeather
+
+Display collection: route /user/:id
+    Display all collections by that user, sort by popularity
+
+Display all public collections: route /
+    Display all collections by that are public, sort by popularity
+    
+    Display ColourSchemeThumb /user/:id
+        If user is logged in and is owner of item, show edit button
+
+Display ColourSchemeFull
+    Only accessible to owner
+    Delete button -> modal are you sure?
+        Yes/No
+    Save button
+    Name field
+    Public checkbox // optional might always be public
+
+Display User login // might not enable or build
+    Input Name
+    Input Email
+    Input Password
+    Input Confrim
+    Button Sign up
+
+    // validate
+    // sign user in
