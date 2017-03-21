@@ -1,14 +1,13 @@
 import React from 'react';
-import BasePage from './basepage';
-import ViewPublicSchemes from './viewPublicSchemes';
+import BasePage from '../basepage';
+import SignInForm from './signinform';
 
-export default class App extends React.Component {
-
+export default class SignIn extends React.Component {
     render() {
         return (
             <div>
                 <BasePage {...this.props}>
-                    <ViewPublicSchemes />
+                    <SignInForm {...this.props}/>
                 </BasePage>
             </div>
         );

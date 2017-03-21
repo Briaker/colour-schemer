@@ -1,9 +1,6 @@
 import React from 'react';
-import base from '../base';
 import * as firebase from 'firebase';
 import { withRouter } from 'react-router-dom'
-
-// const dbRef = base.database().ref();
 
 class SignOut extends React.Component {
     constructor() {
@@ -51,7 +48,6 @@ class SignOut extends React.Component {
                 <form onSubmit={this.handleSubmit}>
                     <button>Sign out</button>
                 </form>
-                <h1>Sign out!</h1>
             </div>
         );
     }

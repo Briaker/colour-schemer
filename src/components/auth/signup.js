@@ -1,9 +1,8 @@
 import React from 'react';
-import base from '../base';
+import BasePage from '../basepage';
 import * as firebase from 'firebase';
+import { db, auth } from '../../base';
 import { withRouter } from 'react-router-dom'
-
-// const dbRef = base.database().ref();
 
 class SignUp extends React.Component {
     constructor() {
@@ -24,10 +23,10 @@ class SignUp extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        const email = this.state.email;
-        const name = this.state.name;
-        const password = this.state.password;
-        const confirm = this.state.confirm;
+        const email = this.state.email.trim();
+        const name = this.state.name.trim();
+        const password = this.state.password.trim();
+        const confirm = this.state.confirm.trim();
 
         // Local input validation
         if(email === '' || name === '' || password === '' || confirm === '') {
@@ -40,7 +39,6 @@ class SignUp extends React.Component {
             firebase.auth()
             .createUserWithEmailAndPassword(this.state.email, this.state.password)
             .then((user) => {
-                // console.log('success!');
                 this.props.history.push('/');
             })
             .catch((error) => {
@@ -67,7 +65,7 @@ class SignUp extends React.Component {
     }
     
     handleInput(event) {
-        const input = event.target.value.trim();
+        const input = event.target.value;
         this.setState({
             [event.target.name]: input
         });
@@ -81,7 +79,7 @@ class SignUp extends React.Component {
 
     render() {
         return (
-            <div>
+            <BasePage {...this.props}>
                 <div>{this.state.message}</div>
                 <form onSubmit={this.handleSubmit}>
                     <label htmlFor="email">Email</label>
@@ -98,7 +96,7 @@ class SignUp extends React.Component {
                     <button>Sign up</button>
                 </form>
                 <h1>Sign up!</h1>
-            </div>
+            </BasePage>
         );
     }
 }

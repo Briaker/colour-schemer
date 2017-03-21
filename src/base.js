@@ -11,6 +11,7 @@ export const base = firebase.initializeApp({
 export const db = base.database();
 
 export const auth = base.auth();
+export const storage = base.storage();
 
 export const storageKey = 'keepItSecret';
 

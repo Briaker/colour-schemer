@@ -1,22 +1,21 @@
 import React from 'react';
-import base from '../base';
+import SignOut from './signout';
 import * as firebase from 'firebase';
-import { Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+import { isAuthenticated } from '../../base';
 
-// const dbRef = base.database().ref();
-
-export default class SignIn extends React.Component {
+class SignInForm extends React.Component {
     constructor() {
         super();
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInput = this.handleInput.bind(this);
         this.setMessage = this.setMessage.bind(this);
+        this.displaySignInForm = this.displaySignInForm.bind(this);
 
         this.state = {
             email: '',
             password: '',
-            message: '',
-            redirectToReferrer: false
+            message: ''
         }
     }
 
@@ -34,8 +33,8 @@ export default class SignIn extends React.Component {
             firebase.auth()
             .signInWithEmailAndPassword(this.state.email, this.state.password)
             .then((user) => {
-                console.log('success!');
-                this.setState({ redirectToReferrer: true });
+                const {from} = this.props.location.state || '/';
+                this.props.history.push(from);
             })
             .catch((error) => {
                 // Remote input validation
@@ -69,15 +68,12 @@ export default class SignIn extends React.Component {
         });
     }
 
-    render() {
-        const {from} = this.props.location.state || '/';
+    displaySignInForm() {
         const redirectToReferrer = this.state.redirectToReferrer;
+        const {from} = this.props.location.state || '/';
 
         return (
             <div>
-                {redirectToReferrer && (
-                    <Redirect to={from}/>
-                )}
                 <div>{this.state.message}</div>
                 <form onSubmit={this.handleSubmit}>
                     <label htmlFor="email">Email</label>
@@ -88,8 +84,18 @@ export default class SignIn extends React.Component {
 
                     <button>Sign in</button>
                 </form>
-                <h1>Sign in!</h1>
             </div>
         );
     }
+
+    render() {
+        const content = (isAuthenticated()) ? (<SignOut />) : this.displaySignInForm();
+        return (
+            <div>{content}</div>
+        );
+    }
 }
+
+const SignInFormRouter = withRouter(SignInForm);
+
+export default SignInFormRouter;

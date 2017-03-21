@@ -64,3 +64,16 @@ Display User login // might not enable or build
 
     // validate
     // sign user in
+
+cmd
+C:\Users\Brian\AppData\Local\Google\Cloud SDK
+gsutil cors get gs://colour-schemer.appspot.com
+gsutil cors set cors.config.json gs://colour-schemer.appspot.com
+
+[
+    {
+        "origin": ["*"],
+        "method": ["GET"],
+        "maxAgeSeconds": 3600
+    }
+]

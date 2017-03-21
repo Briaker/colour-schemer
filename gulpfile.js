@@ -44,8 +44,9 @@ gulp.task('styles', () => {
 });
 
 gulp.task('es6', () => {
-    return browserify('./src/main.js')
+    return browserify('./src/main.js', { debug: true })
     .transform('babelify', {
+        sourceMaps: true,
         presets: [
             'es2015', 
             'react',

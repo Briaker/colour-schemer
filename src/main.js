@@ -1,15 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { isAuthenticated, auth, db, storageKey } from './base';
-import Header from './components/header';
 import App from './components/app';
-import SignUp from './components/signup';
-import SignIn from './components/signin';
-import SignOut from './components/signout';
+import SignUp from './components/auth/signup';
+import SignIn from './components/auth/signin';
+import AddScheme from './components/addScheme';
+import ViewScheme from './components/viewScheme';
+import ViewUser from './components/viewUser';
+import EditScheme from './components/editScheme';
 import NoMatch from './components/no-match';
 import Footer from './components/footer';
 
+import { isAuthenticated, auth, db, storageKey } from './base';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom';
 
 class Root extends React.Component {
@@ -38,19 +40,30 @@ class Root extends React.Component {
         });
     }
 
+    static childContextTypes = {
+        uid: React.PropTypes.string
+    }
+
+    getChildContext() {
+        return {
+            uid: this.state.uid
+        };
+    }
+
     render() {
         return (
             <Router>
                 <div>
-                    <Header />
                     <Switch>
                         <Route exact path="/" component={App} />
                         <Route path="/signup" component={SignUp} />
                         <Route path="/signin" component={SignIn} />
-                        <PrivateRoute path="/signout" component={SignOut} />
+                        <Route path="/users/:userId/schemes/:schemeId" component={ViewScheme} />
+                        <Route path="/users/:userId" component={ViewUser} />
+                        <PrivateRoute path="/add" component={AddScheme} />
+                        <PrivateRoute path="/edit/:id" component={EditScheme} />
                         <Route component={NoMatch}/>
                     </Switch>
-                    <Footer />
                 </div>
             </Router>
         );
@@ -58,17 +71,19 @@ class Root extends React.Component {
 }
 
 // If the user is authenticaded, then render the protected component, otherwise redirect to the signin page
-const PrivateRoute = ({ component, ...rest }) => (
-    <Route {...rest} render={ props => (
-        isAuthenticated() ? (
-            React.createElement(component, props)
-        ) : (
-            <Redirect to={{
-                pathname: '/signin',
-                state: { from: props.location }
-            }}/>
-        )
-    )}/>
-);
+const PrivateRoute = ({ component, ...rest }) => {
+    return (
+        <Route {...rest} render={ (props) => (
+            isAuthenticated() ? (
+                React.createElement(component, props)
+            ) : (
+                <Redirect to={{
+                    pathname: '/signin',
+                    state: { from: props.location }
+                }}/>
+            )
+        )}/>
+    );
+};
 
 ReactDOM.render(<Root />, document.getElementById('main'));
