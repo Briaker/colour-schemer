@@ -9,7 +9,8 @@ export default class ViewScheme extends React.Component {
         this.state = {
             primaryColour: null,
             paletteColours: null,
-            schemeImageUrl: null
+            schemeImageUrl: null,
+            isPublic: null
         }
     }
 
@@ -33,7 +34,7 @@ export default class ViewScheme extends React.Component {
         const url = this.state.schemeImageUrl;
         return (
             <BasePage {...this.props}>
-                <Scheme schemeData={this.state} />
+                <Scheme schemeData={this.state} showCodes={true}/>
             </BasePage>
         );
     }

@@ -3,8 +3,6 @@ import React from 'react';
 import Scheme from './scheme';
 import { db } from '../base';
 
-
-
 export default class ViewSchemes extends React.Component {
     constructor() {
         super();
@@ -15,9 +13,9 @@ export default class ViewSchemes extends React.Component {
 
     componentDidMount() {
         const dbRef = db.ref('/users')
-        const schemesCollection = [];
 
         dbRef.on('value', (data) => {
+            const schemesCollection = [];
             const users = data.val();
 
             for(let userKey in users) {
@@ -25,12 +23,9 @@ export default class ViewSchemes extends React.Component {
 
                 for(let schemeKey in schemes) {
                     const schemeData = schemes[schemeKey];
+                    schemeData.path = `users/${userKey}/schemes/${schemeKey}`;
                     if(schemeData.isPublic) {
-                        const primary = schemeData.primaryColour;
-                        const palette = schemeData.paletteColours;
-                        const url = schemeData.schemeImageUrl;
-
-                        schemesCollection.push(<Scheme key={schemeKey} primaryColour={primary} paletteColours={palette} schemeImageUrl={url}/>);
+                        schemesCollection.push(<Scheme key={schemeKey} schemeData={schemeData} showLink={true} />);
                     }
                 }
             }

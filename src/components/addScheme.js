@@ -2,8 +2,8 @@ import React from 'react';
 import Dropzone from 'react-dropzone';
 import Scheme from './scheme';
 import BasePage from './basepage';
-import ColorThief from '../color-thief';
-import { db, storage } from '../base';
+import ColorThief from '../libraries/color-thief';
+import { db, storage, auth } from '../base';
 import { withRouter } from 'react-router-dom'
 
 const storageRef = storage.ref();
@@ -24,7 +24,7 @@ class AddScheme extends React.Component {
             title: '',
             votes: 0,
             isPublic: false,
-            path: '/'
+            path: null
         }
     }
 
@@ -47,7 +47,6 @@ class AddScheme extends React.Component {
         if(this.context.uid && this.state.title) {
 
             const usersRef = db.ref(`users/${this.context.uid}`);
-            const publicRef = db.ref(`public/`);
             const uesrSchemesRef = usersRef.child('schemes');
 
             const schemeRef = uesrSchemesRef.push({
@@ -60,10 +59,10 @@ class AddScheme extends React.Component {
             });
 
             this.setState({
-                path: `users/${this.context.uid}/schemes/${schemeRef.key}`;
+                path: `users/${this.context.uid}/schemes/${schemeRef.key}`
             });
 
-            this.props.history.push(this.state.path);
+            this.props.history.push(`users/${this.context.uid}/schemes/${schemeRef.key}`);
         }
     }
 
@@ -107,7 +106,6 @@ class AddScheme extends React.Component {
         image.crossOrigin = "Anonymous";
 
         image.addEventListener('load', () => {
-            // console.log("loaded");
             const colorThief = new ColorThief();
             const colour = colorThief.getColor(image);
             const palette = colorThief.getPalette(image, 6);
@@ -120,6 +118,8 @@ class AddScheme extends React.Component {
     }
 
     render() {
+        const scheme = (this.state) ? <Scheme schemeData={this.state} showCodes={true}/> : null;
+
         return (
             <div>
                 <BasePage {...this.props}>
@@ -129,7 +129,7 @@ class AddScheme extends React.Component {
                         <div>Try dropping some files here, or click to select files to upload.</div>
                     </Dropzone>
 
-                    <Scheme schemeData={this.state}/>
+                    {scheme}
 
                     <form onSubmit={this.handleSubmit}>
                         <label htmlFor="title">Title</label>

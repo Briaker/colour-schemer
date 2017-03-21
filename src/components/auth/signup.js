@@ -39,6 +39,12 @@ class SignUp extends React.Component {
             firebase.auth()
             .createUserWithEmailAndPassword(this.state.email, this.state.password)
             .then((user) => {
+                const usersProfileRef = db.ref(`users/${user.uid}/profile`);
+
+                usersProfileRef.set({
+                    name: name
+                });
+
                 this.props.history.push('/');
             })
             .catch((error) => {
@@ -60,7 +66,6 @@ class SignUp extends React.Component {
                     console.log(error.code);
                 }
             });
-            console.log(this.state.messages);
         }
     }
     
