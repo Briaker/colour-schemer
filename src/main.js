@@ -33,13 +33,11 @@ class Root extends React.Component {
     componentDidMount() {
         auth.onAuthStateChanged(user => {
             if (user) {
-                console.log('User found!');
                 window.localStorage.setItem(storageKey, user.uid);
                 this.setState({
                     uid: user.uid
                 });
             } else {
-                console.log('NO user found!');
                 window.localStorage.removeItem(storageKey);
                 this.setState({
                     uid: null
