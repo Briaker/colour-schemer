@@ -21,7 +21,7 @@ export default class Header extends React.Component {
         ;
         return (
             <header>
-                <img className="logo" src="assets/images/logo.png" alt=""/>
+                <img className="logo" src="/assets/images/logo.png" alt=""/>
                 
                 <nav>
                     {navLinks}
