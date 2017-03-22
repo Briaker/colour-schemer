@@ -16,7 +16,6 @@ export default class ViewSchemes extends React.Component {
         this.dbRef = db.ref('/users')
 
         this.dbRef.on('value', (data) => {
-            console.log('View Public dbRef Updated');
             const schemesCollection = [];
             const users = data.val();
 

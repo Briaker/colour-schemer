@@ -21,7 +21,6 @@ export default class ViewScheme extends React.Component {
         this.userSchemesRef = db.ref(`users/${this.props.match.params.userId}/schemes/${this.props.match.params.schemeId}`);
 
         this.userSchemesRef.on('value', (data) => {
-            console.log('View Single Scheme dbRef Updated');
             const schemeData = data.val();
             this.setState({
                 primaryColour: schemeData.primaryColour,

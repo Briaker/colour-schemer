@@ -19,7 +19,6 @@ class ViewUser extends React.Component {
 
         if(this.userRef) {
             this.userRef.on('value', (data) => {
-                console.log('View User dbRef Updated');
                 const userProfile = data.val().profile;
                 const userSchemes = data.val().schemes
                 const schemes = [];
