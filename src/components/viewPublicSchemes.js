@@ -6,15 +6,17 @@ import { db } from '../base';
 export default class ViewSchemes extends React.Component {
     constructor() {
         super();
+        this.dbRef = null
         this.state = {
             schemes: []
         }
     }
 
     componentDidMount() {
-        const dbRef = db.ref('/users')
+        this.dbRef = db.ref('/users')
 
-        dbRef.on('value', (data) => {
+        this.dbRef.on('value', (data) => {
+            console.log('View Public dbRef Updated');
             const schemesCollection = [];
             const users = data.val();
 
@@ -34,6 +36,10 @@ export default class ViewSchemes extends React.Component {
                 schemes: schemesCollection
             });
         });
+    }
+
+    componentWillUnmount() {
+        this.dbRef.off();
     }
 
     render() {

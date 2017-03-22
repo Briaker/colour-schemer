@@ -1,0 +1,130 @@
+.schemesWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.schemeWrapper {
+    margin: 1rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 2rem;
+}
+
+.schemeWrapper .imageWrapper {
+    width: calc(480px - 6rem);
+    height: 345px;
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    border-radius: 2px;
+}
+
+.schemeWrapper .imageWrapper img {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+}
+
+.schemeWrapper button, .schemeWrapper .checkBox {
+    position: absolute;
+    top: 25px;
+    z-index: 100;
+}
+
+.schemeControls button{
+    background: $primary;
+    font-weight: bold;
+}
+
+.schemeControls button:hover{
+   font-weight: 900;
+}
+
+.schemeControls button, .schemeControls .checkBox{
+    height: 32px;
+    width: 30px;
+    padding: 0;
+    padding-top: 2px;
+    border-radius: 2px;
+}
+
+.checkBox {
+    height: 30px;
+    width: 30px;
+    position: relative;
+    background: #CCCCCC;
+}
+
+.checkBox:hover {
+    background: #EEEEEE;
+}
+
+.checkBox input[type="checkbox"] {
+    display: none;
+}
+
+.checkBox input[type="checkbox"] + label {
+    background: url('../images/eye_closed.png');
+    background-position: center center;
+    background-size: 80% 80%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 30px;
+    width: 30px;
+}
+
+.checkBox input[type="checkbox"]:checked + label {
+    background: url('../images/eye.png');
+    background-position: center center;
+    background-size: 80% 80%;
+    background-repeat: no-repeat;
+}
+
+.sampleWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-top: 2rem;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.schemeWrapper button {
+    left: 25px;
+}
+
+.schemeWrapper .checkBox {
+    right: 25px;
+}
+
+.sample {
+    width: 25%;
+    min-width: 50px;
+    min-height: 50px;
+    flex-grow: 1;
+}
+
+.sampleColour {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.colourCodes {
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 1rem;
+    line-height: 1.6rem;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0px 0px 5px 0px rgba(100,100,100,0.4);
+    border-radius: 2px;
+}

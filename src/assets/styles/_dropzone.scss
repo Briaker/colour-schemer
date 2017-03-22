@@ -1,0 +1,28 @@
+.dropZone{
+    background: $backgroundDark;
+    width: $menuWidthDesktop;
+    height: $menuWidthDesktop;
+    margin: 0 auto;
+    border: 3px dashed #CCC;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dropZone.hidden {
+    display: none;
+    visibility: hidden;
+}
+
+.dropZone .uploadIcon {
+    background: url('../images/uploadPlus.png');
+    height: 160px;
+    width: 160px;
+    margin: 2rem;
+}
+
+.dropZoneActive{
+    background: $backgroundMedium;
+}

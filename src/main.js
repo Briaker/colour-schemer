@@ -1,3 +1,11 @@
+// Author: Brian Baker
+// Project 6: Colour Schemer
+// Users, onces registered, can upload images from their computers and save them to their account.
+// The images are processed and the most prominent colours are extracted and the RGB, HEX, and HSL values
+// are displayed.
+
+// ***NOTE: voting is currently just a click counter***
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 

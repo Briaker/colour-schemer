@@ -6,27 +6,36 @@ import { db } from '../base';
 export default class ViewScheme extends React.Component {
     constructor() {
         super();
+        this.userSchemesRef = null;
         this.state = {
             primaryColour: null,
             paletteColours: null,
             schemeImageUrl: null,
-            isPublic: null
+            isPublic: null,
+            path: null,
+            votes: null
         }
     }
 
     componentDidMount() {
-        const userSchemesRef = db.ref(`users/${this.props.match.params.userId}/schemes/${this.props.match.params.schemeId}`);
+        this.userSchemesRef = db.ref(`users/${this.props.match.params.userId}/schemes/${this.props.match.params.schemeId}`);
 
-        userSchemesRef.on('value', (data) => {
+        this.userSchemesRef.on('value', (data) => {
+            console.log('View Single Scheme dbRef Updated');
             const schemeData = data.val();
             this.setState({
                 primaryColour: schemeData.primaryColour,
                 paletteColours: schemeData.paletteColours,
                 schemeImageUrl: schemeData.schemeImageUrl,
                 isPublic: schemeData.isPublic,
-                path: `users/${this.props.match.params.userId}/schemes/${this.props.match.params.schemeId}`
+                path: `users/${this.props.match.params.userId}/schemes/${this.props.match.params.schemeId}`,
+                votes: schemeData.votes
             });
         });
+    }
+
+    componentWillUnmount() {
+        this.userSchemesRef.off();
     }
 
     render() {

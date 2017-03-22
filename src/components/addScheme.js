@@ -128,12 +128,10 @@ class AddScheme extends React.Component {
                     <h1>Drag Files here</h1>
 
                     <Dropzone onDrop={this.onDrop} multiple={false} className={this.state.dropZoneClass} activeClassName="dropZoneActive">
-                        {scheme}
                         <div className="uploadIcon"></div>
-                        <div>Drag and drop your image here!</div>
+                        <div className="text">Drag and drop your image here!</div>
                     </Dropzone>
-
-                    
+                    {scheme}
 
                     <form onSubmit={this.handleSubmit}>
                         <label htmlFor="title">Title</label>

@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom'
 class ViewUser extends React.Component {
     constructor() {
         super();
+        this.userRef = null;
         this.state = {
             schemes: [],
             name: ''
@@ -14,11 +15,11 @@ class ViewUser extends React.Component {
     }
 
     componentDidMount() {
-        const userRef = db.ref(`users/${this.props.match.params.userId}`);
+        this.userRef = db.ref(`users/${this.props.match.params.userId}`);
 
-        if(userRef) {
-            userRef.on('value', (data) => {
-                console.log('user view update', data);
+        if(this.userRef) {
+            this.userRef.on('value', (data) => {
+                console.log('View User dbRef Updated');
                 const userProfile = data.val().profile;
                 const userSchemes = data.val().schemes
                 const schemes = [];
@@ -38,6 +39,10 @@ class ViewUser extends React.Component {
             this.props.history.push('/');
         }
         
+    }
+
+    componentWillUnmount() {
+        this.userRef.off();
     }
 
     render() {

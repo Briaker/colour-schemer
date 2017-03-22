@@ -3,7 +3,8 @@ import React from 'react';
 const Footer = () => {
     return (
         <footer>
-            <h1>Footer!</h1>
+            <p>&copy;2017 Brian Baker</p>
+            <p>Email: <a href="mailto:info@brianbaker.ca">info@brianbaker.ca</a></p>
         </footer>
     );
 }
