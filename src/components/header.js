@@ -21,7 +21,7 @@ export default class Header extends React.Component {
         ;
         return (
             <header>
-                <h1>Color Schemer</h1>
+                <img className="logo" src="assets/images/logo.png" alt=""/>
                 
                 <nav>
                     {navLinks}
