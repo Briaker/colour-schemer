@@ -8,7 +8,7 @@ export default class NoMatch extends React.Component {
             <div>
                 <BasePage {...this.props}>
                     <h1>Page Not Found!</h1>
-                <BasePage />
+                </BasePage>
             </div>
         );
     }
