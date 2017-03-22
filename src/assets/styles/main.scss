@@ -1,11 +1,21 @@
 @import 'setup';
 
+$primary: #05AC4C;
+$backgroundDark: rgb(235, 235, 235);
+$backgroundMedium: rgb(240, 240, 240);
+$backgroundLight: rgb(255, 255, 255);
+$menuWidthDesktop: 480px;
+$inputTransition: background 0.2s ease-in-out;
+
 body {
-    background: brown;
+    background: #FFFFFF;
 }
 
 header, footer {
-    background: lighten(brown, 10);
+    position: relative;
+    z-index: 10;
+    padding: 2rem;
+    background: $backgroundMedium;
 }
 
 header {
@@ -16,32 +26,74 @@ header {
 
 main {
     padding: 2rem;
+    min-height: 500px;
+}
+
+header, .wrapper, footer, .schemeWrapper, nav a, nav button, .checkBox, .schemeControls button {
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+    border-radius: 2px;
 }
 
 header h1 {
     margin: 1rem;
 }
 
-nav, main {
-    background: lighten(brown, 20);
-}
-
-
 nav ul li, .colourCodes {
     list-style: none;
     display: inline-block;
-    padding: 1rem;
-    margin-right: 1rem;
+    padding: 0;
+    margin-right: 0;
     
 }
 
-nav ul li {
-    background: goldenrod;
+nav a, button, input  {
+    border: none;
+    padding: 1rem;
+    margin-right: 1rem;
+    background: #000000;
+    color: $backgroundLight;
+    text-decoration: none;
+    transition: $inputTransition;
+    border-radius: 2px;
+}
+
+label {
+    margin-right: 0.5rem;
+}
+
+input[type="text"], input[type="password"] {
+    background: $backgroundLight;
+    color: #000000;
+}
+// Make the hrefs the same size as the buttons, there's a 1px difference for some reason
+nav a {
+    padding-bottom: calc(1rem + 1px);
+}
+
+nav a:hover, button:hover {
+    background: $primary;
 }
 
 .wrapper {
     width: 80%;
     margin: 0 auto;
+    box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.5);
+}
+
+main form {
+    background: $backgroundDark;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    border-radius: 2px;
+    width: $menuWidthDesktop;
+    margin: 2rem auto;
+}
+
+main form input, main form button {
+    margin: 0;
+    margin-bottom: 1rem;
+    width: 100%;
 }
 
 .sampleWrapper {
@@ -52,7 +104,6 @@ nav ul li {
 .sample{
     min-width: 50px;
     min-height: 50px;
-    border: 3px solid gray;
     flex-grow: 1;
 }
 
@@ -67,7 +118,7 @@ nav ul li {
 }
 
 .schemeWrapper{
-    padding: 1rem;
+    margin: 1rem;
     position: relative;
 }
 
@@ -85,21 +136,113 @@ nav ul li {
     left: 50%;
     transform: translateX(-50%);
     height: 100%;
+    border-radius: 2px;
 }
 
-.schemeWrapper button, .schemeWrapper input[type="checkbox"] {
+.schemeWrapper button, .schemeWrapper .checkBox {
     position: absolute;
     top: 25px;
-    height: 50px;
-    width: 50px;
     z-index: 100;
+}
+
+.schemeControls button{
+    background: $primary;
+    font-weight: bold;
+}
+
+.schemeControls button:hover{
+   font-weight: 900;
+}
+
+.schemeControls button, .schemeControls .checkBox{
+    height: 32px;
+    width: 30px;
+    padding: 0;
+    padding-top: 2px;
+    border-radius: 2px;
+}
+
+.inputWrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.inputWrapper input[type="checkbox"] {
+    margin: 0;
+    width: 13px;
+}
+
+.dropZone{
+    background: $backgroundDark;
+    width: $menuWidthDesktop;
+    height: $menuWidthDesktop;
+    margin: 0 auto;
+    border: 3px dashed #CCC;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dropZone.hidden {
+    width: auto;
+    background: none;
+    border-radius: 0;
+    border: none;
+}
+
+.dropZone .uploadIcon {
+    background: url('../images/uploadPlus.png');
+    height: 160px;
+    width: 160px;
+    margin: 2rem;
+}
+
+.dropZoneActive{
+    background: $backgroundMedium;
+}
+
+.checkBox {
+    height: 30px;
+    width: 30px;
+    position: relative;
+    background: #CCCCCC;
+}
+
+.checkBox:hover {
+    background: #EEEEEE;
+}
+
+.checkBox input[type="checkbox"] {
+    display: none;
+}
+
+.checkBox input[type="checkbox"] + label {
+    background: url('../images/eye_closed.png');
+    background-position: center center;
+    background-size: 80% 80%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 30px;
+    width: 30px;
+}
+
+.checkBox input[type="checkbox"]:checked + label {
+    background: url('../images/eye.png');
+    background-position: center center;
+    background-size: 80% 80%;
+    background-repeat: no-repeat;
 }
 
 .schemeWrapper button {
     left: 25px;
 }
 
-
-.schemeWrapper input[type="checkbox"] {
+.schemeWrapper .checkBox {
     right: 25px;
 }

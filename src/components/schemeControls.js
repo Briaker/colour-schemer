@@ -9,7 +9,6 @@ export default class SchemeControls extends React.Component {
         this.displayControls = this.displayControls.bind(this);
     }
 
-
     handleChecked(event) {
         const dbRef = db.ref(this.props.schemeData.path);
 
@@ -30,7 +29,7 @@ export default class SchemeControls extends React.Component {
     }
 
     displayControls() {
-        if(isAuthenticated()) {
+        if(isAuthenticated() && !this.props.hideControls) {
             const userId = (this.props.schemeData.path) ? 
                 this.props.schemeData.path.match('users\/(.*?)\/schemes')[1] 
             : 
@@ -38,9 +37,12 @@ export default class SchemeControls extends React.Component {
             ;
 
             const voteButton = (<button onClick={this.handleClicked}>{this.props.schemeData.votes}+</button>);
-
+            const uniqueId = `isPublic-${Date.now()}`;
             const publicButton = (userId && this.context.uid && this.context.uid === userId) ? 
-                <input type="checkbox" name="isPublic" onChange={this.handleChecked} checked={this.props.schemeData.isPublic}/>
+                <div className="checkBox">
+                    <input type="checkbox" name="isPublic" id={uniqueId} onChange={this.handleChecked} checked={this.props.schemeData.isPublic}/>
+                    <label htmlFor={uniqueId}></label>
+                </div>
             : 
                 null
             ;

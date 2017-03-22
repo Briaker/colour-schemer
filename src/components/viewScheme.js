@@ -23,6 +23,7 @@ export default class ViewScheme extends React.Component {
                 primaryColour: schemeData.primaryColour,
                 paletteColours: schemeData.paletteColours,
                 schemeImageUrl: schemeData.schemeImageUrl,
+                isPublic: schemeData.isPublic,
                 path: `users/${this.props.match.params.userId}/schemes/${this.props.match.params.schemeId}`
             });
         });

@@ -34,6 +34,12 @@ gulp.task('html', () => {
     .pipe(reload({stream: true}));
 });
 
+gulp.task('images', () => {
+    return gulp.src('./src/assets/images/*.*')
+    .pipe(gulp.dest('./dist/assets/images/'))
+    .pipe(reload({stream: true}));
+});
+
 gulp.task('styles', () => {
     return gulp.src('./src/assets/styles/**/*.scss')
     .pipe(sass().on('error', sass.logError))
@@ -70,6 +76,6 @@ gulp.task('watch', () => {
     gulp.watch('./src/*.html', ['html']);
 });
 
-gulp.task('build', ['html', 'styles', 'es6']);
+gulp.task('build', ['html', 'images', 'styles', 'es6']);
 
-gulp.task('default', ['html', 'styles', 'es6', 'browser-sync', 'watch']);
+gulp.task('default', ['html', 'images', 'styles', 'es6', 'browser-sync', 'watch']);

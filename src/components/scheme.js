@@ -19,7 +19,7 @@ export default class Scheme extends React.Component {
             );
 
             const image = (this.props.showLink) ? 
-                (<Link to={this.props.schemeData.path || "/"}>
+                (<Link to={`/${this.props.schemeData.path}` || "/"}>
                     {imageWrapper}
                 </Link>)
             : 

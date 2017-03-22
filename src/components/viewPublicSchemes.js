@@ -39,7 +39,7 @@ export default class ViewSchemes extends React.Component {
     render() {
         return (
             <div >
-                <h1>View All Shared Schemes</h1>
+                <h1>View All Public Schemes</h1>
                 <div className="schemesWrapper">
                     {this.state.schemes}
                 </div>

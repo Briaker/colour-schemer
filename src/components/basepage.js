@@ -5,13 +5,18 @@ import Footer from './footer';
 export default class BasePage extends React.Component {
     render() { 
         return (
-            <div className="wrapper">
+            <div className="fullBleedWrapper">
                 <Header {...this.props}/>
-                <main>
-                    {this.props.children || <h1>Error!</h1>}
-                </main>
+                
+                <div className="wrapper">
+                    <main>
+                        {this.props.children || <h1>Error!</h1>}
+                    </main>
+                </div>
+
                 <Footer />
             </div>
+            
         );
     }
 }

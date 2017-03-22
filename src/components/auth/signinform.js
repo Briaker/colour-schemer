@@ -82,7 +82,7 @@ class SignInForm extends React.Component {
                     <label htmlFor="password">Password</label>
                     <input type="password" name="password" onChange={this.handleInput} value={this.state.password}/>
 
-                    <button>Sign in</button>
+                    <button>Sign In</button>
                 </form>
             </div>
         );

@@ -24,7 +24,8 @@ class AddScheme extends React.Component {
             title: '',
             votes: 0,
             isPublic: false,
-            path: null
+            path: null,
+            dropZoneClass: 'dropZone'
         }
     }
 
@@ -112,31 +113,35 @@ class AddScheme extends React.Component {
             this.setState({
                 primaryColour: colour,
                 paletteColours: palette,
-                schemeImageUrl: url
+                schemeImageUrl: url,
+                dropZoneClass: "dropZone hidden"
             });
         });
     }
 
     render() {
-        const scheme = (this.state) ? <Scheme schemeData={this.state} showCodes={true}/> : null;
+        const scheme = (this.state) ? <Scheme schemeData={this.state} showCodes={true} hideControls={true}/> : null;
 
         return (
             <div>
                 <BasePage {...this.props}>
                     <h1>Drag Files here</h1>
 
-                    <Dropzone onDrop={this.onDrop} multiple={false}>
-                        <div>Try dropping some files here, or click to select files to upload.</div>
+                    <Dropzone onDrop={this.onDrop} multiple={false} className={this.state.dropZoneClass} activeClassName="dropZoneActive">
+                        {scheme}
+                        <div className="uploadIcon"></div>
+                        <div>Drag and drop your image here!</div>
                     </Dropzone>
 
-                    {scheme}
+                    
 
                     <form onSubmit={this.handleSubmit}>
                         <label htmlFor="title">Title</label>
                         <input type="text" name="title" onChange={this.handleInput} value={this.state.title}/>
-
-                        <label htmlFor="isPublic">Searchable</label>
-                        <input type="checkbox" name="isPublic" onChange={this.handleChecked} value={this.state.isPublic}/>
+                        <div className="inputWrapper">
+                            <label htmlFor="isPublic">Searchable</label>
+                            <input type="checkbox" name="isPublic" id="isPublic" onChange={this.handleChecked} checked={this.state.isPublic}/>
+                        </div>
 
                         <button disabled={!this.state.title}>Save</button>
                     </form>
