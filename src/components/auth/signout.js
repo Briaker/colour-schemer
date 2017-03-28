@@ -6,11 +6,6 @@ class SignOut extends React.Component {
     constructor() {
         super();
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.setMessage = this.setMessage.bind(this);
-
-        this.state = {
-            message: ''
-        }
     }
 
     handleSubmit(event) {
@@ -35,19 +30,10 @@ class SignOut extends React.Component {
         }
     }
 
-    setMessage(text) {
-        this.setState({
-            message: text
-        });
-    }
-
     render() {
         return (
             <div>
-                <div>{this.state.message}</div>
-                <form onSubmit={this.handleSubmit}>
-                    <button>Sign out</button>
-                </form>
+                <button onClick={this.handleSubmit}>Sign out</button>
             </div>
         );
     }
