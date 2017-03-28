@@ -7,6 +7,7 @@ export default class SignIn extends React.Component {
         return (
             <div>
                 <BasePage {...this.props}>
+                    <h1>Sign in</h1>
                     <SignInForm {...this.props}/>
                 </BasePage>
             </div>

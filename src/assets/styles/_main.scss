@@ -30,7 +30,7 @@ header {
 main, 
 .fullBleedWrapper, 
 .wrapper {
-    height: 100%;
+    min-height: 100%;
 }
 
 main {
@@ -116,6 +116,10 @@ main form input, main form button {
     margin: 0;
     margin-bottom: 1rem;
     width: 100%;
+}
+
+.signInForm {
+    margin: 7.5rem 0;
 }
 
 .inputWrapper {

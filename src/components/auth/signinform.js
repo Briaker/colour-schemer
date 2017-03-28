@@ -75,17 +75,17 @@ class SignInForm extends React.Component {
         const {from} = this.props.location.state || '/';
 
         return (
-            <div>
-                <div>{this.state.message}</div>
+            <div className="signInForm">
                 <form onSubmit={this.handleSubmit}>
                     <div>
                         <label htmlFor="email">Email</label>
-                        <input type="text" name="email" onChange={this.handleInput} value={this.state.email} placeholder="Email"/>
+                        <input type="text" id="email" name="email" onChange={this.handleInput} value={this.state.email}/>
 
                         <label htmlFor="password">Password</label>
-                        <input type="password" name="password" onChange={this.handleInput} value={this.state.password} placeholder="Password"/>
+                        <input type="password" id="password" name="password" onChange={this.handleInput} value={this.state.password}/>
                     </div>
                     <button>Sign In</button>
+                    <div>{this.state.message}</div>
                 </form>
             </div>
         );
