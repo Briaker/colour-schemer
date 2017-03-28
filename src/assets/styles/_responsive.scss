@@ -70,6 +70,15 @@
         width: 345px;
         height: 345px;
     }
+
+    .sampleWrapper.fullView .sample {
+        width: 100%;
+    }
+
+    .fullView .sampleColour {
+        justify-content: center;
+    }
+
     nav, 
     nav ul, 
     nav ul li, 
