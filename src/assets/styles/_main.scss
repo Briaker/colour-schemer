@@ -1,5 +1,14 @@
+body, html {
+    height: 100%;
+}
+
 body {
     background: #FFFFFF;
+}
+
+footer a, footer  a:hover, footer a:visited, footer a:focus {
+    color: $primary;
+    text-decoration: none;
 }
 
 header, footer {
@@ -15,9 +24,12 @@ header {
     align-items: center;
 }
 
+#main, main, .fullBleedWrapper, .wrapper {
+    height: 100%;
+}
+
 main {
     padding: 2rem;
-    min-height: 500px;
 }
 
 header .logo {
@@ -35,6 +47,8 @@ header, .wrapper, footer, .schemeWrapper, nav a, nav button, .checkBox, .schemeC
 
 footer {
     display: flex;
+    align-items: center;
+    height: 100px;
 }
 
 footer p {
@@ -51,8 +65,9 @@ nav ul li, .colourCodes {
 nav a, button, input  {
     border: none;
     padding: 1rem;
+    margin-top: 1rem;
     margin-right: 1rem;
-    background: #000000;
+    background: $primary;
     color: $backgroundLight;
     text-decoration: none;
     transition: $inputTransition;
@@ -73,7 +88,7 @@ nav a {
 }
 
 nav a:hover, button:hover {
-    background: $primary;
+    background: lighten($primary, 5);
 }
 
 .wrapper {

@@ -4,6 +4,7 @@ const concat            = require('gulp-concat');
 const autoprefixer      = require('gulp-autoprefixer');
 const notify            = require('gulp-notify');
 const plumber           = require('gulp-plumber');
+
 const babelify          = require('babelify');
 const stageTwo          = require('babel-preset-stage-2');
 const browserify        = require('browserify');
@@ -49,10 +50,30 @@ gulp.task('styles', () => {
     .pipe(reload({stream: true}));
 });
 
-gulp.task('es6', () => {
+gulp.task('es6-debug', () => {
     return browserify('./src/main.js', { debug: true })
     .transform('babelify', {
         sourceMaps: true,
+        presets: [
+                'es2015', 
+                'react',
+                'stage-2'
+            ]
+    })
+    .bundle()
+    .on('error',notify.onError({
+        message: "Error: <%= error.message %>",
+        title: 'Error in JS 💀'
+    }))
+    .pipe(source('main.js'))
+    .pipe(buffer())
+    .pipe(gulp.dest('./dist/assets/js'))
+    .pipe(reload({stream: true}));
+});
+
+gulp.task('es6', () => {
+    return browserify('./src/main.js')
+    .transform('babelify', {
         presets: [
             'es2015', 
             'react',
@@ -78,4 +99,4 @@ gulp.task('watch', () => {
 
 gulp.task('build', ['html', 'images', 'styles', 'es6']);
 
-gulp.task('default', ['html', 'images', 'styles', 'es6', 'browser-sync', 'watch']);
+gulp.task('default', ['html', 'images', 'styles', 'es6-debug', 'browser-sync', 'watch']);

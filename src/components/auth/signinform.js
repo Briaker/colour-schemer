@@ -33,8 +33,8 @@ class SignInForm extends React.Component {
             firebase.auth()
             .signInWithEmailAndPassword(this.state.email, this.state.password)
             .then((user) => {
-                const {from} = this.props.location.state || '/';
-                this.props.history.push(from);
+                // const {from} = this.props.location.state || '/';
+                this.props.history.push('/');
             })
             .catch((error) => {
                 // Remote input validation
@@ -53,8 +53,10 @@ class SignInForm extends React.Component {
                 }
             });
         }
+        
+        
     }
-    
+
     handleInput(event) {
         const input = event.target.value.trim();
         this.setState({
@@ -76,12 +78,13 @@ class SignInForm extends React.Component {
             <div>
                 <div>{this.state.message}</div>
                 <form onSubmit={this.handleSubmit}>
-                    <label htmlFor="email">Email</label>
-                    <input type="text" name="email" onChange={this.handleInput} value={this.state.email}/>
+                    <div>
+                        <label htmlFor="email">Email</label>
+                        <input type="text" name="email" onChange={this.handleInput} value={this.state.email} placeholder="Email"/>
 
-                    <label htmlFor="password">Password</label>
-                    <input type="password" name="password" onChange={this.handleInput} value={this.state.password}/>
-
+                        <label htmlFor="password">Password</label>
+                        <input type="password" name="password" onChange={this.handleInput} value={this.state.password} placeholder="Password"/>
+                    </div>
                     <button>Sign In</button>
                 </form>
             </div>
