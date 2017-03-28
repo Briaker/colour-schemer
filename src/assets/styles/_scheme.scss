@@ -28,12 +28,14 @@
     left: 50%;
     transform: translateX(-50%);
     height: 100%;
+    user-select: none;
 }
 
 .schemeWrapper button, .schemeWrapper .checkBox {
     position: absolute;
     top: 25px;
     z-index: 100;
+    margin: 0
 }
 
 .schemeControls button{
@@ -46,16 +48,16 @@
 }
 
 .schemeControls button, .schemeControls .checkBox{
-    height: 32px;
-    width: 30px;
+    height: 52px;
+    width: 50px;
     padding: 0;
     padding-top: 2px;
     border-radius: 2px;
 }
 
 .checkBox {
-    height: 30px;
-    width: 30px;
+    height: 50px;
+    width: 50px;
     position: relative;
     background: #CCCCCC;
 }
@@ -71,20 +73,20 @@
 .checkBox input[type="checkbox"] + label {
     background: url('../images/eye_closed.png');
     background-position: center center;
-    background-size: 80% 80%;
+    background-size: 70% 70%;
     background-repeat: no-repeat;
     cursor: pointer;
     position: absolute;
     top: 0;
     left: 0;
-    height: 30px;
-    width: 30px;
+    height: 50px;
+    width: 50px;
 }
 
 .checkBox input[type="checkbox"]:checked + label {
     background: url('../images/eye.png');
     background-position: center center;
-    background-size: 80% 80%;
+    background-size: 70% 70%;
     background-repeat: no-repeat;
 }
 
