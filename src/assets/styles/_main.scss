@@ -24,7 +24,12 @@ header {
     align-items: center;
 }
 
-#main, main, .fullBleedWrapper, .wrapper {
+#main, 
+#main > div,
+#main > div > div,
+main, 
+.fullBleedWrapper, 
+.wrapper {
     height: 100%;
 }
 
