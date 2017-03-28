@@ -55,6 +55,9 @@
 }
 
 @media screen and (max-width: 480px) {
+    .wrapper {
+        padding: 0 2rem;
+    }
     .schemeWrapper {
         margin: 1rem 0;
     }
@@ -62,7 +65,11 @@
     .schemeWrapper {
         margin: 1rem 0;
     }
-
+    
+    .schemeWrapper .imageWrapper {
+        width: 345px;
+        height: 345px;
+    }
     nav, 
     nav ul, 
     nav ul li, 
