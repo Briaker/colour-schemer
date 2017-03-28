@@ -57,7 +57,7 @@ export default class SchemePalette extends React.Component {
 
     render() {
         return (
-            <div className="sampleWrapper">
+            <div className={`sampleWrapper ${this.props.showCodes? "fullView" : ""}`}>
                 {this.displayPalette()}
             </div>
         );

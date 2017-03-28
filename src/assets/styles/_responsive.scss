@@ -15,6 +15,21 @@
         margin-top: 2rem;
     }
 
+    .sampleWrapper.fullView {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .sampleWrapper.fullView .sample {
+        width: calc(480px - 6rem);
+    }
+    .fullView .sampleColour {
+        justify-content: flex-start;
+        padding-left: 1rem;
+        margin-bottom: 1rem;
+    }
+
 }
 
 @media screen and (max-width: 767px) {
