@@ -77,3 +77,15 @@ gsutil cors set cors.config.json gs://colour-schemer.appspot.com
         "maxAgeSeconds": 3600
     }
 ]
+
+
+
+TODO:
+    implenent single vote system
+    sort by votes or date
+    display titles
+    list view or thumbnail view
+    display upload progress
+    minify images on upload
+    delete scheme(s)
+    delete unsaved images

@@ -3,8 +3,11 @@ import Dropzone from 'react-dropzone';
 import Scheme from './scheme';
 import BasePage from './basepage';
 import ColorThief from '../libraries/color-thief';
+import jic from '../libraries/JIC.min';
 import { db, storage, auth } from '../base';
 import { withRouter } from 'react-router-dom'
+
+// console.log(jic);
 
 const storageRef = storage.ref();
 
@@ -25,7 +28,8 @@ class AddScheme extends React.Component {
             votes: 0,
             isPublic: false,
             path: null,
-            dropZoneClass: 'dropZone'
+            dropZoneClass: 'dropZone',
+            progress: 0
         }
     }
 
@@ -68,11 +72,15 @@ class AddScheme extends React.Component {
     }
 
     onDrop(file) {
+        console.log(file[0]);
+        console.log(jic.compress(file[0].preview,80,'jpg'));
         const uploadTask = storageRef.child(`userImages/${this.context.uid}/${Date.now()}-${file[0].name}`).put(file[0]);
         
         uploadTask.on('state_changed', (snapshot) => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log(`Upload is ${progress}% done`);
+            this.setState({
+                progress: progress
+            });
 
             switch (snapshot.state) {
                 case 'paused':
@@ -121,7 +129,7 @@ class AddScheme extends React.Component {
 
     render() {
         const scheme = (this.state) ? <Scheme schemeData={this.state} showCodes={true} hideControls={true}/> : null;
-
+        const progressClasses = (this.state.progress > 0) ? "progressWrapper visible" : "progressWrapper";
         return (
             <div>
                 <BasePage {...this.props}>
@@ -130,6 +138,9 @@ class AddScheme extends React.Component {
                     <Dropzone onDrop={this.onDrop} multiple={false} className={this.state.dropZoneClass} activeClassName="dropZoneActive">
                         <div className="uploadIcon"></div>
                         <div className="text">Drag and drop your image here!</div>
+                        <div className={`${progressClasses}`}>
+                            <div className="progress" style={{width:`${this.state.progress}%`}}></div>
+                        </div>
                     </Dropzone>
                     {scheme}
 

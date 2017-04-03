@@ -132,3 +132,27 @@ main form input, main form button {
     margin: 0;
     width: 13px;
 }
+
+.progressWrapper, .progress {
+    height: 12px;
+}
+
+.progressWrapper {
+    width: 200px;
+    background: $backgroundMedium;
+    margin-top: 1rem;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 2px solid $backgroundLight;
+    opacity: 0;
+}
+
+.progressWrapper.visible {
+    opacity: 1;
+}
+
+.progress {
+    width: 10px;
+    background: $primary;
+    transition: width 0.4s ease-in-out 0.4s, opacity 0.4s ease-in-out 0s;
+}
