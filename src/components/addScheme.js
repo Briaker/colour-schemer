@@ -7,8 +7,6 @@ import jic from '../libraries/JIC.min';
 import { db, storage, auth } from '../base';
 import { withRouter } from 'react-router-dom'
 
-// console.log(jic);
-
 const storageRef = storage.ref();
 
 class AddScheme extends React.Component {
@@ -17,11 +15,17 @@ class AddScheme extends React.Component {
         this.onDrop = this.onDrop.bind(this);
         this.processImage = this.processImage.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
         this.handleInput = this.handleInput.bind(this);
         this.handleChecked = this.handleChecked.bind(this);
+        this.dataURItoBlob = this.dataURItoBlob.bind(this);
+        this.deleteImage = this.deleteImage.bind(this);
+
+        this.schemeSaved = false;
 
         this.state = {
             schemeImageUrl: null,
+            dbImagePath: null,
             primaryColour: null,
             paletteColours: null,
             title: '',
@@ -30,6 +34,12 @@ class AddScheme extends React.Component {
             path: null,
             dropZoneClass: 'dropZone',
             progress: 0
+        }
+    }
+
+    componentWillUnmount() {
+        if(!this.schemeSaved && this.state.dbImagePath) {
+            this.deleteImage();
         }
     }
 
@@ -50,7 +60,7 @@ class AddScheme extends React.Component {
     handleSubmit(event) {
         event.preventDefault();
         if(this.context.uid && this.state.title) {
-
+            schemeSaved = true;
             const usersRef = db.ref(`users/${this.context.uid}`);
             const uesrSchemesRef = usersRef.child('schemes');
 
@@ -71,34 +81,77 @@ class AddScheme extends React.Component {
         }
     }
 
-    onDrop(file) {
-        console.log(file[0]);
-        console.log(jic.compress(file[0].preview,80,'jpg'));
-        const uploadTask = storageRef.child(`userImages/${this.context.uid}/${Date.now()}-${file[0].name}`).put(file[0]);
-        
-        uploadTask.on('state_changed', (snapshot) => {
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            this.setState({
-                progress: progress
+    deleteImage() {
+        if(this.state.dbImagePath) {
+            const imageRef = storage.ref(this.state.dbImagePath);
+
+            imageRef.delete()
+            .then(() => {
+                console.log('Image deleted!')
+            })
+            .catch((error) => {
+                console.log(error);
             });
-
-            switch (snapshot.state) {
-                case 'paused':
-                    console.log('Upload is paused');
-                    break;
-                case 'running':
-                    console.log('Upload is running');
-                    break;
-            }
-
-        }, (error) => {
-            console.log(`Upload error: ${error}`);
-        }, () => {
-           this.processImage(uploadTask.snapshot.downloadURL);
-        });
+        }
     }
 
-    processImage(url) {
+    handleCancel(event) {
+        event.preventDefault();
+        console.log('cancel');
+        
+        this.deleteImage();
+        this.props.history.push('/');
+    }
+
+    // TODO: Move to helper file
+    // credit: http://stackoverflow.com/a/7261048
+    dataURItoBlob(dataURI) {
+        // convert base64 to raw binary data held in a string
+        // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+        var byteString = atob(dataURI.split(',')[1]);
+
+        // separate out the mime component
+        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+        // write the bytes of the string to an ArrayBuffer
+        var ab = new ArrayBuffer(byteString.length);
+        var ia = new Uint8Array(ab);
+        for (var i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+
+        return new Blob([ab], {type: mimeString});
+    }
+
+    onDrop(file) {
+        const image = new Image;
+        const originImage = document.createElement('img');
+        let compressedData = null;
+
+        image.onload = () => {
+            originImage.setAttribute('src', image.src);
+            compressedData = this.dataURItoBlob(jic.compress(originImage,80,'jpg').src);
+            const fileName = `${Date.now()}-${file[0].name}`;
+            const dbImagePath = `userImages/${this.context.uid}/${fileName}`;
+
+            const uploadTask = storageRef.child(dbImagePath).put(compressedData);
+            
+            uploadTask.on('state_changed', (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                this.setState({
+                    progress: progress
+                });
+            }, (error) => {
+                console.log(`Upload error: ${error}`);
+            }, () => {
+                this.processImage(uploadTask.snapshot.downloadURL, dbImagePath);
+                window.URL.revokeObjectURL(image.src);
+            });
+        }
+        image.src = window.URL.createObjectURL(file[0]);
+    }
+
+    processImage(url, dbImagePath) {
         // Color Thief needs an html element object to process
         const image = document.createElement('img');
 
@@ -109,7 +162,7 @@ class AddScheme extends React.Component {
         // The image's url
         image.setAttribute('src', url);
 
-        // In order for Image Thief to request images from firebase.storage,
+        // In order to request images from firebase.storage,
         // this attribute is required, along with configuring the storage bucket to
         // allow CORS (cross origin resource sharing)
         image.crossOrigin = "Anonymous";
@@ -122,6 +175,7 @@ class AddScheme extends React.Component {
                 primaryColour: colour,
                 paletteColours: palette,
                 schemeImageUrl: url,
+                dbImagePath: dbImagePath,
                 dropZoneClass: "dropZone hidden"
             });
         });
@@ -143,6 +197,7 @@ class AddScheme extends React.Component {
                         </div>
                     </Dropzone>
                     {scheme}
+                    <img id="compressedImage" alt=""/>
 
                     <form onSubmit={this.handleSubmit}>
                         <label htmlFor="title">Title</label>
@@ -153,6 +208,7 @@ class AddScheme extends React.Component {
                         </div>
 
                         <button disabled={!this.state.title}>Save</button>
+                        <button onClick={this.handleCancel}>Cancel</button>
                     </form>
 
                 </BasePage>
