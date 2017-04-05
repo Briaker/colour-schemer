@@ -133,26 +133,67 @@ main form input, main form button {
     width: 13px;
 }
 
-.progressWrapper, .progress {
-    height: 12px;
+.lightBox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
 }
 
-.progressWrapper {
-    width: 200px;
+.modal {
     background: $backgroundMedium;
-    margin-top: 1rem;
-    border-radius: 6px;
-    overflow: hidden;
-    border: 2px solid $backgroundLight;
-    opacity: 0;
+    border-radius: 2px;
+    padding: 3rem 4rem;
+    display: flex;
+    flex-direction: column;
 }
 
-.progressWrapper.visible {
-    opacity: 1;
+.modal .buttons {
+    display: flex;
+    justify-content: space-between;
 }
 
-.progress {
-    width: 10px;
-    background: $primary;
-    transition: width 0.4s ease-in-out 0.4s, opacity 0.4s ease-in-out 0s;
+.modal .buttons button {
+    margin: 0;
+    margin-top: 2rem;
+}
+
+.modal .buttons button:hover {
+    box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.2);
+}
+
+.modal h2 {
+    margin-top: 0;
+}
+
+.modal .cancelButton {
+    color: #000;
+    background: $backgroundDark;
+    transition: all 0.4s ease-in-out;
+}
+
+.modal .cancelButton:hover {
+    background: $backgroundLight;
+}
+
+.modal.error .acceptButton {
+    background: $secondary;
+}
+
+.modal.error .acceptButton {
+    background: $secondary;
+}
+
+.modal.error h2 {
+    color: $secondary;
+}
+
+.modal.error .acceptButton:hover {
+    background: lighten($secondary, 5);
 }

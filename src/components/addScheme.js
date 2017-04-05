@@ -58,6 +58,7 @@ class AddScheme extends React.Component {
     }
 
     handleSubmit(event) {
+        console.log('SUBMIT!');
         event.preventDefault();
         if(this.context.uid && this.state.title) {
             schemeSaved = true;
@@ -98,8 +99,6 @@ class AddScheme extends React.Component {
     handleCancel(event) {
         event.preventDefault();
         console.log('cancel');
-        
-        this.deleteImage();
         this.props.history.push('/');
     }
 
@@ -178,7 +177,9 @@ class AddScheme extends React.Component {
                 dbImagePath: dbImagePath,
                 dropZoneClass: "dropZone hidden"
             });
+            console.log(this.state.dbImagePath);
         });
+
     }
 
     render() {

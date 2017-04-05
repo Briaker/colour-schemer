@@ -31,28 +31,33 @@
     user-select: none;
 }
 
-.schemeWrapper button, .schemeWrapper .checkBox {
+.schemeWrapper .voteBtn, .schemeWrapper .userControls {
     position: absolute;
     top: 25px;
     z-index: 100;
     margin: 0
 }
 
-.schemeControls button{
-    background: $primary;
+.deleteBtn {
+    background: $secondary;
     font-weight: bold;
 }
 
-.schemeControls button:hover{
-   font-weight: 900;
+.deleteBtn:hover{
+   background: lighten($secondary, 5);
 }
 
-.schemeControls button, .schemeControls .checkBox{
+.schemeControls button {
     height: 52px;
     width: 50px;
     padding: 0;
     padding-top: 2px;
     border-radius: 2px;
+}
+
+.schemeWrapper .deleteBtn {
+    margin: 0;
+    margin-left: 1rem;
 }
 
 .checkBox {
@@ -99,12 +104,13 @@
     overflow: hidden;
 }
 
-.schemeWrapper button {
+.schemeWrapper .voteBtn {
     left: 25px;
 }
 
-.schemeWrapper .checkBox {
+.schemeWrapper .userControls {
     right: 25px;
+    display: flex;
 }
 
 .sample {

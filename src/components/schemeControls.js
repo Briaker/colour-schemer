@@ -1,15 +1,17 @@
 import React from 'react';
-import { isAuthenticated, db } from '../base';
+import { isAuthenticated, db, storage } from '../base';
 
 export default class SchemeControls extends React.Component {
     constructor() {
         super();
-        this.handleChecked = this.handleChecked.bind(this);
-        this.handleClicked = this.handleClicked.bind(this);
+        this.handleShare = this.handleShare.bind(this);
+        this.handleVote = this.handleVote.bind(this);
         this.displayControls = this.displayControls.bind(this);
+        this.handleOpenModal = this.handleOpenModal.bind(this);
+        this.deleteCallback = this.deleteCallback.bind(this);
     }
 
-    handleChecked(event) {
+    handleShare(event) {
         const dbRef = db.ref(this.props.schemeData.path);
 
         dbRef.update({
@@ -17,7 +19,7 @@ export default class SchemeControls extends React.Component {
         });
     }
 
-    handleClicked(event) {
+    handleVote(event) {
         const dbRef = db.ref(this.props.schemeData.path);
 
         dbRef.child('votes').once('value').then((data) => {
@@ -28,6 +30,48 @@ export default class SchemeControls extends React.Component {
         });
     }
 
+    handleOpenModal(event) {
+        this.context.openModal({
+            title: 'Delete Scheme?', 
+            message: 'After you delete this, it can\'t be recovered.', 
+            accept: 'Delete',
+            isError: true
+        }, 
+            this.deleteCallback
+        );
+    }
+
+    deleteCallback() {
+        if(this.props.schemeData.path && this.props.schemeData.schemeImageUrl) {
+
+            const uri = this.props.schemeData.schemeImageUrl;
+
+            // Split image url into parts, and get path from last part without params
+            const parts = uri.split('/');
+            const path = parts[parts.length - 1].split('?')[0].replace(/%2F/g, '/');
+
+            const schemeRef = db.ref(this.props.schemeData.path);
+            const imageRef = storage.ref(path);
+
+            schemeRef.remove()
+            // .then(() => {
+            //     console.log('Scheme deleted!');
+            // })
+            .catch((error) => {
+                console.log(error);
+            });
+
+            imageRef.delete()
+            // .then(() => {
+            //     console.log('Image deleted!');
+            // })
+            .catch((error) => {
+                console.log(error);
+            });
+        }
+        this.context.closeModal();
+    }
+
     displayControls() {
         if(isAuthenticated() && !this.props.hideControls) {
             const userId = (this.props.schemeData.path) ? 
@@ -36,12 +80,15 @@ export default class SchemeControls extends React.Component {
                 null
             ;
 
-            const voteButton = (<button onClick={this.handleClicked}>{this.props.schemeData.votes}+</button>);
+            const voteButton = (<button className="voteBtn" onClick={this.handleVote}>{this.props.schemeData.votes}+</button>);
             const uniqueId = `isPublic-${Date.now()}`;
             const publicButton = (userId && this.context.uid && this.context.uid === userId) ? 
-                <div className="checkBox">
-                    <input type="checkbox" name="isPublic" id={uniqueId} onChange={this.handleChecked} checked={this.props.schemeData.isPublic}/>
-                    <label htmlFor={uniqueId}></label>
+                <div className="userControls">
+                    <div className="checkBox">
+                        <input type="checkbox" name="isPublic" id={uniqueId} onChange={this.handleShare} checked={this.props.schemeData.isPublic}/>
+                        <label htmlFor={uniqueId}></label>
+                    </div>
+                    <button className="deleteBtn" onClick={this.handleOpenModal}>X</button>
                 </div>
             : 
                 null
@@ -70,5 +117,7 @@ export default class SchemeControls extends React.Component {
 }
 
 SchemeControls.contextTypes =  {
-    uid: React.PropTypes.string
+    uid: React.PropTypes.string,
+    openModal: React.PropTypes.func,
+    closeModal: React.PropTypes.func
 };

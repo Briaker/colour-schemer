@@ -29,9 +29,9 @@ export default class Scheme extends React.Component {
             ; 
             return (
                 <div className="schemeWrapper">
-                        <SchemeControls {...this.props}/>
-                        {image}
-                        <SchemePalette {...this.props}/>
+                    <SchemeControls {...this.props}/>
+                    {image}
+                    <SchemePalette {...this.props}/>
                 </div>
             );
         }
