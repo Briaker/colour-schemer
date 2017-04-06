@@ -85,8 +85,11 @@ TODO:
     sort by votes or date
     display titles
     list view or thumbnail view
+    restrict upload size and file types (jpg, jpeg, png, gif, bmp)
     display upload progress -- DONE
     minify images on upload -- DONE
-    restrict upload size and file types (jpg, jpeg, png, gif, bmp)
-    delete scheme(s)
+    delete scheme(s) -- DONE
     delete unsaved images -- DONE
+    re-factor scheme components
+        make one scheme component that handles rendering as full, thumb, or list
+        render as a selectable list (shift/ctrl click to select multiple)

@@ -26,7 +26,7 @@ export default class ViewSchemes extends React.Component {
                     const schemeData = schemes[schemeKey];
                     schemeData.path = `users/${userKey}/schemes/${schemeKey}`;
                     if(schemeData.isPublic) {
-                        schemesCollection.push(<Scheme key={schemeKey} schemeData={schemeData} showLink={true} />);
+                        schemesCollection.push(<Scheme key={schemeKey} schemeData={schemeData} showLink={true} listView={true}/>);
                     }
                 }
             }

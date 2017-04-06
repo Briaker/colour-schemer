@@ -5,13 +5,10 @@ import { Link } from 'react-router-dom';
 import { isAuthenticated } from '../base';
 
 export default class Scheme extends React.Component {
-    constructor() {
-        super();
-        this.displayScheme = this.displayScheme.bind(this);
-    }
-
-    displayScheme() {
+    render() {
         if(this.props.schemeData.primaryColour && this.props.schemeData.paletteColours) {
+            const classes = `schemeWrapper${this.props.listView ? " listView" : "" }`;
+
             const imageWrapper = (
                 <div className="imageWrapper">
                     <img src={this.props.schemeData.schemeImageUrl} alt=""/>
@@ -28,7 +25,7 @@ export default class Scheme extends React.Component {
                 </div>
             ; 
             return (
-                <div className="schemeWrapper">
+                <div className={classes}>
                     <SchemeControls {...this.props}/>
                     {image}
                     <SchemePalette {...this.props}/>
@@ -39,16 +36,4 @@ export default class Scheme extends React.Component {
             return null;
         }
     }
-
-    render() {
-        return (
-            <div>
-                {this.displayScheme()}
-            </div>
-        );
-    }
 }
-
-Scheme.contextTypes =  {
-    uid: React.PropTypes.string
-};

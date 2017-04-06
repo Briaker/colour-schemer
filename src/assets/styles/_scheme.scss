@@ -31,11 +31,16 @@
     user-select: none;
 }
 
-.schemeWrapper .voteBtn, .schemeWrapper .userControls {
+
+.schemeControls {
     position: absolute;
     top: 25px;
+    left: 25px;
+    right: 25px;
     z-index: 100;
-    margin: 0
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
 }
 
 .deleteBtn {
@@ -55,13 +60,16 @@
     border-radius: 2px;
 }
 
-.schemeWrapper .deleteBtn {
+.checkBox, .deleteBtn, .voteBtn {
     margin: 0;
-    margin-left: 1rem;
 }
 
 .checkBox {
-    height: 50px;
+    margin-right: 1rem;
+}
+
+.checkBox {
+    height: 52px;
     width: 50px;
     position: relative;
     background: #CCCCCC;
@@ -136,4 +144,18 @@
     background: rgba(255, 255, 255, 0.7);
     box-shadow: 0px 0px 5px 0px rgba(100,100,100,0.4);
     border-radius: 2px;
+}
+
+
+.schemeWrapper.listView {
+    width: 100%;
+    flex-direction: row;
+}
+
+.schemeWrapper.listView .imageWrapper{
+    display: none;
+}
+
+.schemeWrapper.listView .sampleWrapper{
+    margin: 0;
 }

@@ -54,17 +54,11 @@ export default class SchemeControls extends React.Component {
             const imageRef = storage.ref(path);
 
             schemeRef.remove()
-            // .then(() => {
-            //     console.log('Scheme deleted!');
-            // })
             .catch((error) => {
                 console.log(error);
             });
 
             imageRef.delete()
-            // .then(() => {
-            //     console.log('Image deleted!');
-            // })
             .catch((error) => {
                 console.log(error);
             });
